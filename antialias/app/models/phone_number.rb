@@ -9,7 +9,7 @@ class PhoneNumber
   index :updated_at
 
   validates :value, presence: true
-  has_n :shares_visit_with, :phone_numbers
-  has_n :shares_visit_with, :device_ids
-  has_n :shares_visit_with, :emails
+  has_many :shares_visit_with, :phone_numbers
+  has_many :shares_visit_with, :device_ids
+  has_many :shares_visit_with, :emails
 end

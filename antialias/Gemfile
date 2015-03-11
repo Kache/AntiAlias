@@ -42,5 +42,11 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # suggested by http://blog.benmorgan.io/post/88913410501/getting-started-with-neo4j-ruby-2-1-2-and-rails
+  gem 'os'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
 end
 

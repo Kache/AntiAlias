@@ -1,0 +1,2 @@
+class PersonGraphsController < ApplicationController
+end

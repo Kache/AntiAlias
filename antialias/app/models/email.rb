@@ -1,4 +1,4 @@
-class Email < ActiveRecord::Base
+class Email
   include Neo4j::ActiveNode
 
   property :value

@@ -1,4 +1,4 @@
-class DeviceId < ActiveRecord::Base
+class DeviceId
   include Neo4j::ActiveNode
 
   property :value

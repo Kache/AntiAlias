@@ -1,4 +1,4 @@
-class PhoneNumber < ActiveRecord::Base
+class PhoneNumber
   include Neo4j::ActiveNode
 
   property :value

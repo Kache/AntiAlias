@@ -28,27 +28,38 @@ module VisitProcessor
       end
     end
 
-    ap nodes
-    puts "#{new_nodes} new node(s) created"
     VisitedWith.completely_connect(nodes)
+    return new_nodes, nodes.count
   end
 
 
   def self.import_mt_csv_dump(filename="mt_dump.csv", limit=nil)
     count = 0
+    new_nodes = 0
+    processed_fields = 0
     CSV.foreach(filename, headers: true) do |row|
       if limit && count > limit then break end
+      STDOUT.write("\rcreated #{new_nodes} new nodes --- processed #{processed_fields} fields")
       row.delete("updated_at")
       row.delete("created_at")
       row.delete("user_id")
-      VisitProcessor.process_raw_visit(row)
+      n = VisitProcessor.process_raw_visit(row)
+      new_nodes += n.first
+      processed_fields += n.last
+      STDOUT.flush
       count += 1
     end
   end
 
   def self.import_ale_csv_dump(filename="ales_dump.csv")
+    new_nodes = 0
+    processed_fields = 0
     CSV.foreach(filename, headers: true) do |row|
-      VisitProcessor.process_raw_visit(row)
+      STDOUT.write("\rcreated #{new_nodes} new nodes --- processed #{processed_fields} fields")
+      n = VisitProcessor.process_raw_visit(row)
+      new_nodes += n.first
+      processed_fields += n.last
+      STDOUT.flush
     end
   end
 end

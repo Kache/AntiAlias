@@ -34,12 +34,15 @@ module VisitProcessor
   end
 
 
-  def self.import_mt_csv_dump(filename="mt_dump.csv")
+  def self.import_mt_csv_dump(filename="mt_dump.csv", limit=nil)
+    count = 0
     CSV.foreach(filename, headers: true) do |row|
+      if limit && count > limit then break end
       row.delete("updated_at")
       row.delete("created_at")
       row.delete("user_id")
       VisitProcessor.process_raw_visit(row)
+      count += 1
     end
   end
 

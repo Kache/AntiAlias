@@ -1,4 +1,4 @@
-class DeviceId
+class DriversLicense
   include Neo4j::ActiveNode
   include AntiAliasNodeMethods
 

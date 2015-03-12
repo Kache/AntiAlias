@@ -1,4 +1,4 @@
-class DeviceId
+class UserId
   include Neo4j::ActiveNode
   include AntiAliasNodeMethods
 

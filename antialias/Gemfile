@@ -25,6 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'neo4j', '~> 4.1.4'
 gem 'thin'
+gem 'awesome_print'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

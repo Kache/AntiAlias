@@ -1,4 +1,4 @@
-class DeviceId
+class CreditCard
   include Neo4j::ActiveNode
   include AntiAliasNodeMethods
 

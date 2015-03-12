@@ -13,14 +13,6 @@ module AntiAliasNodeMethods
     errors.add("#{self.name} has duplicate rels") if !rels_are_unique
   end
 
-  def strongly_connected
-    <<-neo4j
-      MATCH person = self-[*]-n
-      WHERE ID(self) = #{self.neo_id}
-      RETURN person
-    neo4j
-  end
-
   module ClassMethods
   end
 

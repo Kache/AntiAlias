@@ -8,9 +8,13 @@ module AntiAlias
   end
 
   # single email using lots of cc's/lots of dl's
-  def self.chokepoint
-    <<-neo4j
-      MATCH (n)-[r]-(x) RETURN n, COUNT(r) ORDER BY COUNT(r) DESC LIMIT 1;
+  def self.chokepoint(node_type, limit=1, rel_type=VisitedWith)
+    query_rel_name = rel_type.name.underscore.upcase
+    Neo4j::Session.query(<<-neo4j).map(&:n)
+      MATCH (n:#{node_type})-[r:#{query_rel_name}]-(x)
+      RETURN n, COUNT(r)
+      ORDER BY COUNT(r) DESC
+      LIMIT #{limit};
     neo4j
   end
 

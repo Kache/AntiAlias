@@ -23,6 +23,7 @@ class VisitedWith
     other.nodes.map(&:neo_id).sort == self.nodes.map(&:neo_id).sort
   end
 
+  # ensures all nodes are completely related via VisitedWith once and only once
   def self.completely_connect(nodes)
     existing_rels = nodes.map(&:rels).flatten.uniq
 

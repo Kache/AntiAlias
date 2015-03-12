@@ -7,8 +7,11 @@ class VisitedWith
   validate :unique_rel
 
   def unique_rel
-    rel_exists = to_node.visited_withs.include?(from_node)
-    errors.add("#{from_node.inspect} already linked to #{to_node.inspect}") if rel_exists
+    to_from_rel = to_node.visited_withs.include?(from_node)
+    from_to_rel = from_node.visited_withs.include?(to_node)
+    rel_already_exists = to_from_rel || from_to_rel
+
+    errors.add("#{from_node.name} already linked to #{to_node.name}") if rel_already_exists
   end
 
   def nodes

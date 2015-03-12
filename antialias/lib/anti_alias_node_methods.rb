@@ -1,7 +1,7 @@
 # shared functionality for AntiAlias Nodes
 module AntiAliasNodeMethods
   def name
-    "#{self.class.name} node #{self.neo_id}"
+    "#{self.class} node #{self.neo_id}"
   end
 
   def validate_has_unique_rels
@@ -19,5 +19,9 @@ module AntiAliasNodeMethods
       WHERE ID(self) = #{self.neo_id}
       RETURN person
     neo4j
+  end
+
+  def self.biggest_chokepoints(limit=1)
+    Neo4j::Session.query("MATCH (n:#{self})-[r]-(x) RETURN n, COUNT(r) ORDER BY COUNT(r) DESC LIMIT #{limit};").map(&:n)
   end
 end

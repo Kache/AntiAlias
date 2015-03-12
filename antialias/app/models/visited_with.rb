@@ -36,5 +36,22 @@ class VisitedWith
     end
 
     to_relate.each(&:save!)
+
+    query = <<-neo4j
+      MATCH (n)
+      WHERE NOT (:Person)-[:DATA_POINT]->(n) AND NOT n:Person AND ID(n) IN #{nodes.map(&:neo_id)}
+      RETURN n
+    neo4j
+    ungrouped_nodes = Neo4j::Session.query(query).map(&:n)
+
+    if ungrouped_nodes.present?
+      p = Person.create
+      ungrouped_nodes.each do |n|
+        DataPoint.create(from_node: p, to_node: n)
+      end
+    end
+
+    people = AntiAlias.associated(nodes, Person)
+    Person.merge(people)
   end
 end

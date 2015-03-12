@@ -25,10 +25,10 @@ class VisitedWith
 
   # ensures all nodes are completely related via VisitedWith once and only once
   def self.completely_connect(nodes)
-    existing_rels = nodes.map(&:rels).flatten.uniq
+    existing_rels = nodes.map(&:rels).flatten.select { |r| r.class == VisitedWith }.uniq
 
     proposed_rels = nodes.combination(2).map do |l, r|
-      self.new(from_node: l, to_node: r)
+      VisitedWith.new(from_node: l, to_node: r)
     end
 
     to_relate = proposed_rels.reject do |rel|
@@ -51,7 +51,7 @@ class VisitedWith
       end
     end
 
-    people = AntiAlias.associated(nodes, Person)
+    people = AntiAlias.associated(nodes, Person).uniq
     Person.merge(people)
   end
 end

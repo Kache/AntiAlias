@@ -10,22 +10,27 @@ module VisitProcessor
     UserId => ["user_id"]
   }
 
+  TYPE_TO_CLASS = Hash[VisitProcessor::FIELD_MODEL_HASH.map do |model, fields|
+    fields.map { |f| [f, model] }
+  end.flatten(1)]
+
   # As of right now, visit can be action_log_entry or mall_transaction and is represented as a dict
   # of fields:values.
   def self.process_raw_visit(visit)
-    nodes = []
+    visit_hash = visit.to_h
     new_nodes = 0
-    FIELD_MODEL_HASH.each do |model,fields|
-      fields.each do |field|
-        if visit[field].present?
-          if model.find_by(value: visit[field]).nil?
-            new_nodes += 1
-            nodes << model.create(value: visit[field])
-          else
-            nodes << model.find_by(value: visit[field])
-          end
-        end
+    nodes = []
+    visit_hash.each do |type, value|
+      model = TYPE_TO_CLASS[type]
+      if model.nil? || value.blank? then next end
+
+      node = model.find_by(value: value)
+
+      if node.blank?
+        node = model.create(value: value)
+        new_nodes += 1
       end
+      nodes << node
     end
 
     VisitedWith.completely_connect(nodes)

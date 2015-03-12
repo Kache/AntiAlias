@@ -14,7 +14,7 @@ class Person
     sorted_ppl = people.sort_by(&:created_at)
 
     oldest, *younger_people = sorted_ppl
-    data_nodes_to_merge = younger_people.flat_map { |person| person.data_nodes }
+    data_nodes_to_merge = younger_people.flat_map { |person| person.data_nodes.map { |x| x } }
 
     if oldest.present? && younger_people.present?
       query = <<-neo4j

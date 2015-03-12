@@ -1,6 +1,13 @@
 module AntiAlias
   # biggest collection of associated nodes
-  def self.largest_group
+  def self.largest_person_group(limit=1)
+    query = <<-neo4j
+      MATCH (person:Person)-[r:DATA_POINT]->(x)
+      RETURN person, COUNT(r) as count
+      ORDER BY COUNT(r) DESC
+      LIMIT #{limit}
+    neo4j
+    Neo4j::Session.query(query).map { |r| [r.person, r.count] }
   end
 
   # how cliquey is a group

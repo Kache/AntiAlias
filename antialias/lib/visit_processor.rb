@@ -8,7 +8,7 @@ module VisitProcessor
     UserId => ["user_id"]
   }
 
-  def add_visit_nodes(nodes)
+  def self.add_visit_nodes(nodes)
     while nodes.count > 1
       top = nodes.first
       nodes[1..-1].each do |n|
@@ -20,19 +20,25 @@ module VisitProcessor
 
   # As of right now, visit can be action_log_entry or mall_transaction and is represented as a dict
   # of fields:values.
-  def process_raw_visit(visit)
+  def self.process_raw_visit(visit)
     nodes = []
+    new_nodes = 0
     FIELD_MODEL_HASH.each do |model,fields|
       fields.each do |field|
         if visit[field].present?
-          if model.where(value: visit[field]).nil?
+          if model.find_by(value: visit[field]).nil?
+            new_nodes += 1
             nodes << model.create(value: visit[field])
           else
-            nodes << model.where(value: visit[field])
+            nodes << model.find_by(value: visit[field])
           end
         end
       end
     end
+
+    ap nodes
+    puts "#{new_nodes} new node(s) created"
+    add_visit_nodes(nodes)
   end
 
 end

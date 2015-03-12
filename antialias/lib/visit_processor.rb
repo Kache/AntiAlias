@@ -46,4 +46,9 @@ module VisitProcessor
     end
   end
 
+  def self.import_ale_csv_dump(filename="ales_dump.csv")
+    CSV.foreach(filename, headers: true) do |row|
+      VisitProcessor.process_raw_visit(row)
+    end
+  end
 end

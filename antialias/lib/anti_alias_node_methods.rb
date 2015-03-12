@@ -21,7 +21,13 @@ module AntiAliasNodeMethods
     neo4j
   end
 
-  def self.biggest_chokepoints(limit=1)
-    Neo4j::Session.query("MATCH (n:#{self})-[r]-(x) RETURN n, COUNT(r) ORDER BY COUNT(r) DESC LIMIT #{limit};").map(&:n)
+  module ClassMethods
+    def biggest_chokepoints(limit=1)
+      Neo4j::Session.query("MATCH (n:#{self})-[r]-(x) RETURN n, COUNT(r) ORDER BY COUNT(r) DESC LIMIT #{limit};").map(&:n)
+    end
+  end
+
+  def self.included(base)
+    base.extend(ClassMethods)
   end
 end

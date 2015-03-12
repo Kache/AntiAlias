@@ -8,16 +8,6 @@ module VisitProcessor
     UserId => ["user_id"]
   }
 
-  def self.add_visit_nodes(nodes)
-    while nodes.count > 1
-      top = nodes.first
-      nodes[1..-1].each do |n|
-        top.visited_withs << n
-      end
-      nodes.shift
-    end
-  end
-
   # As of right now, visit can be action_log_entry or mall_transaction and is represented as a dict
   # of fields:values.
   def self.process_raw_visit(visit)
@@ -38,7 +28,7 @@ module VisitProcessor
 
     ap nodes
     puts "#{new_nodes} new node(s) created"
-    add_visit_nodes(nodes)
+    VisitedWith.completely_connect(nodes)
   end
 
 end

@@ -1,3 +1,5 @@
+require 'csv'
+
 module VisitProcessor
   FIELD_MODEL_HASH = {
     DeviceId => ["device_id", "tmx_device_id"],
@@ -29,6 +31,21 @@ module VisitProcessor
     ap nodes
     puts "#{new_nodes} new node(s) created"
     VisitedWith.completely_connect(nodes)
+  end
+
+
+  def import_mt_csv_dump(filename="mt_dump.csv")
+    mt_dump = CSV.read(filename)
+    keys = mt_dump.first
+    mt_dump[1..-1].each do |line|
+
+
+    CSV.foreach(filename, headers: true) do |row|
+      row.delete("updated_at")
+      row.delete("created_at")
+      row.delete("user_id")
+      VisitProcessor.process_raw_visit(row)
+    end
   end
 
 end

@@ -52,8 +52,8 @@ body{
 
 .header{
 	position: absolute;
-	top: calc(50% - 35px);
-	left: calc(50% - 255px);
+	top: calc(10% - 35px);
+	left: calc(30% - 255px);
 	z-index: 2;
 }
 
@@ -69,17 +69,17 @@ body{
 	color: #5379fa !important;
 }
 
-.login{
+.personGraph{
 	position: absolute;
-	top: calc(50% - 75px);
-	left: calc(50% - 50px);
+	top: calc(15% - 75px);
+	left: calc(60% - 50px);
 	height: 150px;
-	width: 350px;
+	width: 700px;
 	padding: 10px;
 	z-index: 2;
 }
 
-.login input[type=text]{
+.personGraph input[type=text]{
 	width: 250px;
 	height: 30px;
 	background: transparent;
@@ -92,21 +92,7 @@ body{
 	padding: 4px;
 }
 
-.login input[type=password]{
-	width: 250px;
-	height: 30px;
-	background: transparent;
-	border: 1px solid rgba(255,255,255,0.6);
-	border-radius: 2px;
-	color: #fff;
-	font-family: 'Exo', sans-serif;
-	font-size: 16px;
-	font-weight: 400;
-	padding: 4px;
-	margin-top: 10px;
-}
-
-.login input[type=button]{
+.personGraph input[type=button]{
 	width: 260px;
 	height: 35px;
 	background: #fff;
@@ -121,25 +107,19 @@ body{
 	margin-top: 10px;
 }
 
-.login input[type=button]:hover{
+.personGraph input[type=button]:hover{
 	opacity: 0.8;
 }
 
-.login input[type=button]:active{
+.personGraph input[type=button]:active{
 	opacity: 0.6;
 }
 
-.login input[type=text]:focus{
+.personGraph input[type=text]:focus{
 	outline: none;
 	border: 1px solid rgba(255,255,255,0.9);
 }
-
-.login input[type=password]:focus{
-	outline: none;
-	border: 1px solid rgba(255,255,255,0.9);
-}
-
-.login input[type=button]:focus{
+.personGraph input[type=button]:focus{
 	outline: none;
 }
 
@@ -162,14 +142,36 @@ body{
 		<div class="grad"></div>
 		<div class="header">
 			<div>AntiAlias</div>
+
+			<br>
+            <br>
+            <br>
+            <br>
+            <BR>
+            <br>	
+            <br>
+            <br>
+            <BR>
+            <br>
+            <% @graph.each do |node| -%>
+            	<% node.each do |node_info| -%>
+            		<h1><%= node_info %></h1>
+            	<% end -%>
+            <% end -%>
+             
 		</div>
 		<br>
-		<div class="login">
-			    <input type="text" name="user"><br>
+		<div class="personGraph">
+			    <input type="text" name="searchEntry">
 				<input type="button" value="Person Graph Query" onClick="parent.location='persongraph.html'">
-		</div>
+
+        
+				
+	    </div>
 
   <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+
+
 
 </body>
 

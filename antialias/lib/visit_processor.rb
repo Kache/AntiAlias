@@ -35,11 +35,6 @@ module VisitProcessor
 
 
   def import_mt_csv_dump(filename="mt_dump.csv")
-    mt_dump = CSV.read(filename)
-    keys = mt_dump.first
-    mt_dump[1..-1].each do |line|
-
-
     CSV.foreach(filename, headers: true) do |row|
       row.delete("updated_at")
       row.delete("created_at")

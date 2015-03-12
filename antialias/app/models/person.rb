@@ -16,7 +16,7 @@ class Person
     oldest, *younger_people = sorted_ppl
     data_nodes_to_merge = younger_people.flat_map { |person| person.data_nodes }
 
-    if oldest.present && younger_people.present?
+    if oldest.present? && younger_people.present?
       query = <<-neo4j
         match (oldest_person:Person)
         where id(oldest_person) = #{oldest.neo_id}

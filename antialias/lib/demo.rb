@@ -27,10 +27,17 @@ module Demo
     puts query
   end
 
-  # Demo.show_group(AntiAlias.chokepoint(PhoneNumber, 10).first)
+  # Demo.show_group(AntiAlias.chokepoint(PhoneNumber, 10)[0])
+  # Demo.show_group(AntiAlias.chokepoint(DeviceId, 10)[0])
+  #
+  # Demo.show_group(AntiAlias.chokepoint(Email, 10)[0])
+  # Demo.show_group(AntiAlias.chokepoint(CreditCard, 10)[0])
+
+  # Demo.show_person_query(AntiAlias.largest_person_group(10).map(&:first)[3])
+
+  # Demo.show_group(AntiAlias.chokepoint(DriversLicense, 10)[0])
 
   # Demo.show_person_query(AntiAlias.largest_person_group(10).map(&:first)[0])
-  # Demo.show_person_query(AntiAlias.largest_person_group(10).map(&:first)[3]) => "cliquey",
-
+  # Demo.show_person_query(AntiAlias.associated([Email.find_by(value: "jgi1111@me.com")], Person).first)
   # Demo.show_person_query(AntiAlias.associated([PhoneNumber.find_by(value: "5622213232")], Person).first)
 end
